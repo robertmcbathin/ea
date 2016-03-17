@@ -1,0 +1,114 @@
+#content{
+	display: block;
+	width: 812px;
+	margin:40px auto 10px;
+	padding: 10px;
+}
+
+
+.calendar ul{
+	display: block;
+	clear:left;
+	min-height: 82px;
+	width:auto;
+	margin: 0 auto;
+	padding: 0;
+	list-style: none;
+	background-color: transparent;
+	text-align: center;
+	border: 1px solid transparent;
+	border-top:0;
+	border-bottom: 2px solid transparent;
+}
+.calendar ul.weekdays{
+	height: 24px;
+	border-top: 2px solid white;
+	border-radius: 10px 10px 0 0;
+}
+.calendar .weekdays li{
+	height: 40px;
+	padding: 2px 2px;
+	background-color: transparent;
+}
+.calendar ul li{
+	position: relative;
+	float: left;
+	margin: 2px;
+	padding: 20px 2px 2px;
+	border-left: 2px solid transparent;
+	border-right: 2px solid transparent;
+	border-radius: 3px;
+	min-width: 100px;
+    width:158px;
+	min-height: 60px;
+	height: auto;
+	overflow: hidden;
+	background-color: #ccc;
+}
+.calendar ul li:hover{
+	background-color: #BEDBCA;
+	z-index:1;
+	-mox-box-shadow: 0 0 10px #789;
+	-webkit-box-shadow: 0 0 10px #789;
+	box-shadow: 0 0 10px #789;
+}
+
+.calendar ul li strong{
+	position: absolute;
+	top:2px;
+	right: 2px;
+	font-size: 18px;
+	color: white;
+	font-family: Cambria, Verdana, serif;
+}
+.calendar ul li hr{
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+.calendar ul li a{
+	//position: relative;
+	display: block;
+	margin: 2px;
+	padding: 2px;
+	font-size: 11px;
+	
+	z-index:1;
+	text-decoration: none;
+	color:#F9F9FB;
+	font-weight: bold;
+	font-style: italic;
+}
+.calendar ul li a:hover{
+	//background-color: #bcf;
+	//z-index:2;
+	//-moz-box-shadow:0 0 6px #789;
+	//box-shadow: 0 0 6px #789;
+}
+
+.calendar ul li.fill{
+	background-color: #bcd;
+}
+.weekdays li:hover, li.fill:hover{
+	background-color: #bcd;
+	-moz-box-shadow:none;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+}
+.calendar .weekdays li:hover,.today{
+	background-color: #bcf;
+}
+.calendar .weekdays li:hover{
+	height: 40px;
+	padding: 2px 2px;
+	background-color: transparent;
+	-moz-box-shadow:none;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+}
+@media screen and (max-width: 1030px) {
+   .calendar ul li {
+      width: 130px;
+   }
+.a-no-style{
+	float:right;
+}

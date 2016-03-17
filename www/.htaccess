@@ -1,0 +1,13 @@
+Options +MultiViews +FollowSymlinks
+Options -Indexes
+AddDefaultCharset UTF-8
+RewriteEngine on
+RewriteBase /
+RewriteRule ^index$ index.php
+RewriteCond %{SCRIPT_FILENAME} !-f
+RewriteCond %{SCRIPT_FILENAME} !-d
+<Files ~ "^\.ht">
+Order allow,deny
+Deny from all
+
+</Files>

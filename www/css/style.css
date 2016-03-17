@@ -1,0 +1,189 @@
+*{
+	margin:0;
+	padding:0;
+}
+@font-face{
+	font-family: Roboto;
+	src: url(fonts/RobotoTTF/Roboto-Regular.ttf);
+}
+.wrapper{
+	width: 100%;
+	height: 100%;
+}
+.row{
+	margin: auto;
+	max-width: 760px;
+}
+body { padding-top: 70px; }
+/*HEADER - фиксированная панель сверху*/
+header{
+}
+.inner-stat-block{
+	position:relative;
+	width:100%;
+	height: 400px;
+	background: #ccc;
+}
+.inner-functions-block{
+	display:block;
+	height:200px;
+	width:100%;
+	background: #cff;
+}
+.inner-functions-block .inner-function{
+	display:inline-block;
+	height:190px;
+	border:1px solid black;
+	width:24%;
+	/*min-width: 182px;*/
+	margin:0.25%;
+}
+ul.horizontal-menu{margin-left: 10px;}
+ul.horizontal-menu li{
+	display: inline-block;
+	margin-left:2px;
+	margin-right: 2px;
+	margin-top: 5px;
+	margin-bottom: 15px;
+}
+ul.horizontal-menu li:first-child{
+	margin-left:3px;
+	margin-right: 3px;
+	margin-top: 15px;
+	padding-top: 10px;
+	margin-bottom: 25px;
+}
+ul.horizontal-menu li:last-child{
+	float:right;
+}
+ul.horizontal-menu li:hover{
+	cursor:pointer;
+}
+a.menu-href {
+	font-family: 'Verdana', sans;
+	font-size: 14px;
+    color:#939393;
+    text-decoration: none;
+    text-shadow: 0 0 1px #ddd;
+}
+a.menu-signed-person{
+	font-family: 'Verdana', sans;
+	font-size: 9px;
+    color:#939393;
+    text-decoration: none;
+    text-shadow: 0 0 1px #ddd;
+}
+a.menu-href:hover{
+	color:#333 ;
+}
+span.icono-list {
+	margin-left: 10px;
+}
+/*Modal windows*/
+#login-window{
+		width: 300px; 
+	height: 300px; /* Размеры должны быть фиксированы */
+	border-radius: 5px;
+	border: 3px #000 solid;
+	background: #fff;
+	position: fixed; /* чтобы окно было в видимой зоне в любом месте */
+	top: 45%; /* отступаем сверху 45%, остальные 5% подвинет скрипт */
+	left: 50%; /* половина экрана слева */
+	margin-top: -150px;
+	margin-left: -150px; /* тут вся магия центровки css, отступаем влево и вверх минус половину ширины и высоты соответственно =) */
+	display: none; /* в обычном состоянии окна не должно быть */
+	opacity: 0; /* полностью прозрачно для анимирования */
+	z-index: 5; /* окно должно быть наиболее большем слое */
+	padding: 20px 10px;
+}
+#login-window #login-widow-close{
+	width: 21px;
+	height: 21px;
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	cursor: pointer;
+	display: block;
+}
+#overlay {
+	z-index: 3; /* подложка должна быть выше слоев элементов сайта, но ниже слоя модального окна */
+	position: fixed; /* всегда перекрывает весь сайт */
+	background-color: #000; /* черная */
+	opacity: 0.8; /* но немного прозрачна */
+	width: 100%; 
+	height: 100%; /* размером во весь экран */
+	top: 0; 
+	left: 0; /* сверху и слева 0, обязательные свойства! */
+	cursor: pointer;
+	display: none; /* в обычном состоянии её нет) */
+}
+.right-float{
+	float: right;
+}
+h1,h2,h3,h4,h5,h6{
+	font-family: Roboto;
+}
+#service-toggle:hover{
+  cursor: pointer;
+}
+#doctor-toggle:hover{
+  cursor: pointer;
+}
+#service-add{
+  margin-right:10px;
+}
+#doctor-add{
+  margin-right:10px;
+}
+#service-add:hover{
+  cursor: pointer;
+}
+#doctor-add:hover{
+  cursor: pointer;
+}
+#service-list-table{
+	display: none;
+}
+#doctor-list-table{
+	display: none;
+}
+.m-flex{
+	display: inline-flex;
+}
+.timeline tr td{
+	height:30px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
+.spare{
+	background-color: rgba(201,234,201,0.4);
+	color: white;
+	font-family: Cambria;
+	font-size: 10px;
+	padding-left: 3px;
+	padding-right: 3px;
+	text-shadow: 1px 1px 5px #000;
+}
+.busy{
+	background-color: #337ab7;
+	color: white;
+	font-family: Cambria;
+	font-size: 10px;
+	padding-left: 3px;
+	padding-right: 3px;
+	text-shadow: 1px 1px 5px #000;
+}
+.table-head{
+	padding-right: 5px;
+	padding-left: 5px;
+}
+.app-data-link{
+	color: white;
+	font-family: Cambria;
+	text-decoration: none;
+}
+.app-data-link:hover{
+	color: #DDD;
+	font-family: Cambria;
+	text-decoration: none;
+}

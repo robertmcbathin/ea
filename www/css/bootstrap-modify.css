@@ -1,0 +1,64 @@
+body{
+	background: url(../pictures/bg-dark.png) repeat;
+}
+.pacient-bg{
+	background-color: #fff;
+	padding: 10px;
+	border-radius: 10px;
+}
+.head-name{
+	font-family: 'Segoe script';
+}
+.calendar-ul{
+	padding:5px;
+}
+.list-group-item.success, .list-group-item.success:hover, .list-group-item.success:focus {
+text-shadow: 0 -1px 0 #286090;
+background-image: -webkit-linear-gradient(top,#60c277 0,#2c8460 100%);
+background-image: -o-linear-gradient(top,#60c277 0,#2c8460 100%);
+background-image: -webkit-gradient(linear,left top,left bottom,from(#60c277),to(#2c8460));
+background-image: linear-gradient(to bottom,#60c277 0,#2c8460 100%);
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff60c277', endColorstr='#ff2c8460', GradientType=0);
+background-repeat: repeat-x;
+border-color: #2c8460;
+}
+.list-group-item.success, .list-group-item.success:hover, .list-group-item.success:focus {
+z-index: 2;
+color: #fff;
+background-color: #60c277;
+border-color: #2FBD8B;
+}
+
+.list-group-item.alert, .list-group-item.alert:hover, .list-group-item.alert:focus {
+text-shadow: 0 -1px 0 #286090;
+background-image: -webkit-linear-gradient(top,#d2b627 0,#baab13 100%);
+background-image: -o-linear-gradient(top,#d2b627 0,#baab13 100%);
+background-image: -webkit-gradient(linear,left top,left bottom,from(#d2b627),to(#baab13));
+background-image: linear-gradient(to bottom,#d2b627 0,#baab13 100%);
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffd2b627', endColorstr='#ffbaab13', GradientType=0);
+background-repeat: repeat-x;
+border-color: #baab13;
+}
+.list-group-item.alert, .list-group-item.alert:hover, .list-group-item.alert:focus {
+z-index: 2;
+color: #fff;
+background-color: #d2b627;
+border-color: #b3b634;
+}
+
+.list-group-item.danger, .list-group-item.danger:hover, .list-group-item.danger:focus {
+text-shadow: 0 -1px 0 #286090;
+background-image: -webkit-linear-gradient(top,#e54747 0,#c81717 100%);
+background-image: -o-linear-gradient(top,#e54747 0,#c81717 100%);
+background-image: -webkit-gradient(linear,left top,left bottom,from(#e54747),to(#c81717));
+background-image: linear-gradient(to bottom,#e54747 0,#c81717 100%);
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffe54747', endColorstr='#ffc81717', GradientType=0);
+background-repeat: repeat-x;
+border-color: #c81717;
+}
+.list-group-item.danger, .list-group-item.danger:hover, .list-group-item.danger:focus {
+z-index: 2;
+color: #fff;
+background-color: #e54747;
+border-color: #c84545;
+}

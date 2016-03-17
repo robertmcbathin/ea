@@ -1,0 +1,14 @@
+{
+	"folders":
+	[
+		{
+			"follow_symlinks": true,
+			"path": "F:\\WebServers\\home\\endoadmin2"
+		}
+	],
+	 "settings": {
+        "xdebug": {
+             "url": "endoadmin2/calendar",
+        }
+    }
+}
