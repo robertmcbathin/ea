@@ -800,6 +800,58 @@ public function confirmDeleteDoctor($id)
 </form>
 CONFIRM_DELETE;
 }
+/*------ПОДТВЕРЖДЕНИЕ УДАЛЕНИЯ ПОЛЬЗОВАТЕЛЯ-----*/
+/**
+*/
+public function confirmDeleteUser($id)
+{
+  if(empty($id)){return NULL;}
+  $id = preg_replace('/[^0-9]/', '', $id);
+  if(isset($_POST['confirm_delete']) && $_POST['token']==$_SESSION['token'])
+  {
+    if($_POST['confirm_delete']=="Да, удалить")
+    {
+      $sql = "DELETE FROM `person`
+              WHERE `person_id`=:id
+              LIMIT 1";
+      try
+      {
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(
+          ":id",
+          $id,
+          PDO::PARAM_INT);
+        $stmt->execute();
+        $stmt->closeCursor();
+        header("Location: ./");
+        die("<div class='container'><div class='alert alert-success'><p align='center'>Запись успешно удалена. </p></div></div>");
+        return;
+      }
+      catch (Exception $e)
+      {
+        return $e->getMessage();
+      }
+    }
+    else
+    {
+      header("Location: ./");
+      return;
+    }
+  }
+  return <<<CONFIRM_DELETE
+<form action="confirmdelete_user" method="post">
+  <h2>Вы действительно хотите удалить данного пользователя из списка?</h2>
+  <p>Данное действие <strong>необратимо</strong></p>
+  <p>
+    <input type="submit" class="btn btn-primary" name="confirm_delete" value="Да, удалить">
+    <input type="submit" class="btn btn-primary" name="confirm_delete" value="Нет, я передумал(а)">
+    <input type="hidden" name="person_id" value="$id">
+    <input type="hidden" name="token" value="$_SESSION[token]">
+  </p>
+</form>
+CONFIRM_DELETE;
+}
+/*-----------*/
 public function _loadPacientData()
   {
       $items = array();

@@ -64,7 +64,7 @@ if(isset($_GET['change_user_id']))
       <label for="login">Пароль<input type="text" class="form-control" size="40" name="psw" maxlength="80"  value="$r[psw]"></label><br>
       <button type="submit" class="btn btn-default">Изменить</button>
     </form><br>
-    <form action="confirmdelete_doctor" method="POST">
+    <form action="confirmdelete_user" method="POST">
         <p>
           <input type="submit" name="delete_person" class="btn btn-primary" value="Удалить"/>
           <input type="hidden" name="person_id" value="$person_id">
