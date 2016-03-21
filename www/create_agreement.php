@@ -248,7 +248,11 @@ if (isset($_POST['number']))
   $act_template->setValue('summary',$summary);
 
   $act_template->saveAs($act_directory_with_filename);
-
+  /*ИЗМЕНЕНИЕ СТАТУСА НАЗНАЧЕНИЯ*/
+  $complete_sql = "UPDATE `appointment` 
+                   SET `status`='прием завершен'
+                   WHERE `app_id`='$app_id'";
+  mysql_query($complete_sql);
   /*ДОБАВИТЬ УСЛОВИЯ УСПЕШНОСТИ ВЫПОЛНЕНИЯ ВЫШЕПЕРЕЧИСЛЕННЫХ ДЕЙСТВИЙ*/
   die("<div class='container'>
          <div class='alert alert-success'>

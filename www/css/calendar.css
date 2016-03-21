@@ -43,7 +43,7 @@
 	min-height: 60px;
 	height: auto;
 	overflow: hidden;
-	background-color: #ccc;
+	background-color: #bcd;
 }
 .calendar ul li:hover{
 	background-color: #BEDBCA;
@@ -51,6 +51,7 @@
 	-mox-box-shadow: 0 0 10px #789;
 	-webkit-box-shadow: 0 0 10px #789;
 	box-shadow: 0 0 10px #789;
+	cursor: pointer;
 }
 
 .calendar ul li strong{
@@ -86,7 +87,7 @@
 }
 
 .calendar ul li.fill{
-	background-color: #bcd;
+	background-color: #ccc;
 }
 .weekdays li:hover, li.fill:hover{
 	background-color: #bcd;
