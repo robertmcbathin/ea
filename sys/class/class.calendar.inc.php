@@ -1045,6 +1045,18 @@ public function _getMonthByNumber($number)
   return $month_name;
 }
 /**
+ * [_getUsersList] 
+ * @return [array] array
+ */
+public function _getUsersList()
+{
+  $sql = "SELECT * FROM `person`";
+  $stmt = $this->db->prepare($sql);
+  $stmt->execute();
+  return $stmt;
+  $stmt->closeCursor();
+}
+/**
  * [_getPriceList] 
  * @return [array] array
  */
@@ -1082,14 +1094,28 @@ public function _getService($id)
   $stmt->closeCursor();
 }
 /**
- * [_getService returns a row of data]
- * @param  [int] $id [service id]
+ * [_getDoctor returns a row of data]
+ * @param  [int] $id [doctor id]
  * @return [object]     [row of data]
  */
 public function _getDoctor($id)
 {
   $sql = "SELECT * FROM `doctor`
           WHERE `doctor_id` = '$id'";
+  $stmt = $this->db->prepare($sql);
+  $stmt->execute();
+  return $stmt;
+  $stmt->closeCursor();
+}
+/**
+ * [_getUser returns a row of data]
+ * @param  [int] $id [user id]
+ * @return [object]     [row of data]
+ */
+public function _getUser($id)
+{
+  $sql = "SELECT * FROM `person`
+          WHERE `person_id` = '$id'";
   $stmt = $this->db->prepare($sql);
   $stmt->execute();
   return $stmt;

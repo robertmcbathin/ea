@@ -53,6 +53,41 @@ while ($r = $stmt->fetch(PDO::FETCH_ASSOC))
 }
 $pricelist = $stmt->fetchAll();
 $stmt->closeCursor();
+/*-------------------------*/
+/*GET USERS LIST*/
+$stmt = $cal->_getUsersList();
+while ($r = $stmt->fetch(PDO::FETCH_ASSOC))
+{
+  $users_in_table .= '<tr>'
+                  . '<td>'
+                  . $r['person_id']
+                  . '</td>'
+                  . '<td>'
+                  . "<a href=\"change_user_data?change_user_id=$r[person_id]\"> $r[name]</a>"
+                  . '</td>'
+                  . '<td>'
+                  . $r['name_short']
+                  . '</td>'
+                  . '<td><strong>'
+                  . $r['type']
+                  . '</strong></td>'
+                  . '<td><strong>'
+                  . $r['specialization']
+                  . '</strong></td>'
+                  . '<td><strong>'
+                  . $r['email']
+                  . '</strong></td>'
+                  . '<td><strong>'
+                  . $r['login']
+                  . '</strong></td>'
+                  . '<td>'
+                  . $r['phone']
+                  . '</td>'
+                  . '</tr>';
+}
+$pricelist = $stmt->fetchAll();
+$stmt->closeCursor();
+/**/
 echo <<<HEAD_MARKUP
 <div class="container">
   <h1>НАСТРОЙКИ</h1>
@@ -117,6 +152,35 @@ echo "<div class='container'>
        echo "</div>"; // конец .container
      
 /*-------------------КОНЕЦ СПИСКА ВРАЧЕЙ-----------------------------------*/
+/*-------------------СПИСОК ПОЛЬЗОВАТЕЛЕЙ-----------------------------------*/
+echo "<div class='container'>
+       <div class='panel panel-default'>
+       <!-- Default panel contents -->
+         <div class='panel-heading'>Пользователи
+           <span id='user-toggle' class='glyphicon glyphicon-chevron-down right-float' data-toggle='tooltip' title='Раскрыть список'></span>
+           <a href='add_user'><span id='user-add' class='glyphicon glyphicon-plus right-float' data-toggle='tooltip' title='Добавить пользователя'></span></a>
+         </div>
+       <!-- Table -->
+       <table class='table' id='user-list-table'>
+         <thead>
+           <tr>
+             <th>#</th>  
+             <th>ФИО полное</th>
+             <th>ФИО краткое</th> 
+             <th>Тип</th>
+             <th>Специализация</th>
+             <th>E-mail</th>
+             <th>Логин</th>
+           </tr>
+         </thead>
+         <tbody>";
+         echo $users_in_table;
+       echo "</tbody>
+       </table>
+       </div>"; //воткнуть paginator
+       echo "</div>"; // конец .container
+     
+/*-------------------КОНЕЦ СПИСКА ПОЛЬЗОВАТЕЛЕЙ-----------------------------------*/
  echo "</div>
 </div>";
 ?>
@@ -141,6 +205,16 @@ echo "<div class='container'>
        } else {
          $('#doctor-toggle').removeClass('glyphicon-chevron-up');
          $('#doctor-toggle').addClass('glyphicon-chevron-down');
+       }
+    });
+    $('#user-toggle').click(function(){
+      $('#user-list-table').toggle();
+       if ($('#user-toggle').hasClass('glyphicon-chevron-down')){
+         $('#user-toggle').removeClass('glyphicon-chevron-down');
+         $('#user-toggle').addClass('glyphicon-chevron-up');
+       } else {
+         $('#user-toggle').removeClass('glyphicon-chevron-up');
+         $('#user-toggle').addClass('glyphicon-chevron-down');
        }
     });
   });

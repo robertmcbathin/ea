@@ -931,6 +931,18 @@ public function _getMonthByNumber($number)
   return $month_name;
 }
 /**
+ * [_getUsersList] 
+ * @return [array] array
+ */
+public function _getUsersList()
+{
+  $sql = "SELECT * FROM `person`";
+  $stmt = $this->db->prepare($sql);
+  $stmt->execute();
+  return $stmt;
+  $stmt->closeCursor();
+}
+/**
  * [_getPriceList] 
  * @return [array] array
  */

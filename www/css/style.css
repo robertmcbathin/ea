@@ -129,10 +129,16 @@ h1,h2,h3,h4,h5,h6{
 #doctor-toggle:hover{
   cursor: pointer;
 }
+#user-toggle:hover{
+  cursor: pointer;
+}
 #service-add{
   margin-right:10px;
 }
 #doctor-add{
+  margin-right:10px;
+}
+#user-add{
   margin-right:10px;
 }
 #service-add:hover{
@@ -141,10 +147,16 @@ h1,h2,h3,h4,h5,h6{
 #doctor-add:hover{
   cursor: pointer;
 }
+#user-add:hover{
+  cursor: pointer;
+}
 #service-list-table{
 	display: none;
 }
 #doctor-list-table{
+	display: none;
+}
+#user-list-table{
 	display: none;
 }
 .m-flex{

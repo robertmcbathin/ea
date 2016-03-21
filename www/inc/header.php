@@ -150,7 +150,8 @@ echo <<<LOGIN
                 <li><a href="faq"><span class="glyphicon glyphicon-question-sign"></span> СПРАВКА</a></li>
               </ul>
               <ul class="nav navbar-nav navbar-right">
-                <li><a href='logout' target='_blank'><span><strong>$user </strong></span><span class='glyphicon glyphicon-log-out'></span></a></li>
+                <li><a href='logout'><span data-toggle='tooltip' title='Выйти' data-placement='bottom'><strong>$user </strong></span><span class='glyphicon glyphicon-log-out'></span></a>
+                </li>
               </ul>
             </div><!-- /.navbar-collapse -->
           </div><!-- /.container-fluid -->
