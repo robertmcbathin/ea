@@ -232,28 +232,31 @@ ADMIN_OPTIONS;
 private function _adminEntryOptions($id,$pacient_id)
 {
   return <<<ADMIN_OPTIONS
-    <div class="col-lg-6 col-sm-6">
+   <div class=\"row\">
+    <div class="col-lg-6 col-sm-12 col-xs-12 col">
       <form action="admin.php" method="post">
         <p>
-          <input type="submit" class="btn btn-primary" name="edit_app" value="Редактировать назначение" />
+          <input type="submit" class="btn btn-primary btn-block" name="edit_app" value="Редактировать" />
           <input type="hidden" name="app_id" value="$id" />
         </p>
       </form>
       <form action="confirmdelete.php" method="post">
         <p>
-          <input type="submit" name="delete_app" class="btn btn-primary" value="Удалить назначение"/>
+          <input type="submit" name="delete_app" class="btn btn-primary btn-block" value="Удалить"/>
           <input type="hidden" name="app_id" value="$id">
         </p>
       </form>
     </div>
-    <div class="col-lg-6 col-sm-6">
+    <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
     <form action="confirmcomplete.php" method="post">
         <p>
-          <input type="submit" name="delete_app" class="btn btn-primary right-float" value="Завершить назначение"/>
+          <a href="calendar" class="btn btn-default">&laquo; Вернуться в календарь</a>
+          <input type="submit" name="delete_app" class="btn btn-success right-float" value="Завершить назначение"/>
           <input type="hidden" name="app_id" value="$id">
         </p>
       </form>
     </div>
+  </div>
 ADMIN_OPTIONS;
 }
   /*--------*/
@@ -448,6 +451,145 @@ public function displayApp($id)
           $admin
           ";
 }
+/*-----DISPLAY THE APP IN MODAL----------*/
+public function displayAppModal($id)
+{
+  if(empty($id)){return NULL;}
+  $id = preg_replace('/[^0-9]/', '', $id);
+  $app = $this->_loadAppById($id);
+  /*Запрос на существование договора и акта*/
+  //$agreement_existence = $this->_loadAgreementData($id);
+  $abs_act_path = "../www/docs/pacient/" . $app->pacient_id  . "/acts/akt_" . $app->id . "_" . $app->pacient_id . ".docx";
+  $act_path = "/docs/pacient/" . $app->pacient_id  . "/acts/akt_" . $app->id . "_" . $app->pacient_id . ".docx";
+  $abs_agreement_path = "../www/docs/pacient/" . $app->pacient_id  . "/agreements/dogovor_" . $app->id . "_" . $app->pacient_id . ".docx";
+  $agreement_path = "/docs/pacient/" . $app->pacient_id  . "/agreements/dogovor_" . $app->id . "_" . $app->pacient_id . ".docx";
+  if((file_exists($abs_agreement_path)) && (file_exists($abs_act_path)))
+  {
+    //show file link to save
+    //show agreement fields
+    $agreement_print_result = 
+    "<div class=\"row\">
+    <div class=\"col-lg-4 col-sm-4\">
+       <div class=\"panel panel-primary\">
+         <div class=\"panel-heading\">ДОГОВОР</div>
+         <div class=\"panel-body\">
+           <div class=\"alert alert-info\" role=\"alert\">
+               <span class=\"sr-only\"></span>
+               <a href=\"$agreement_path\"><img src=\"/pictures/wordicon.png\">Договор</a>
+           </div>
+         </div>
+       </div>
+     </div>
+     <div class=\"col-lg-4 col-sm-4\">
+       <div class=\"panel panel-primary\">
+         <div class=\"panel-heading\">АКТ</div>
+         <div class=\"panel-body\">
+           <div class=\"alert alert-info\" role=\"alert\">
+               <span class=\"sr-only\"></span>
+               <a href=\"$act_path\"><img src=\"/pictures/wordicon.png\">Акт</a>
+           </div>
+         </div>
+       </div>
+     </div>
+     <div class=\"col-lg-4 col-sm-4\">
+       <div class=\"panel panel-primary\">
+         <div class=\"panel-heading\">ЗАКЛЮЧЕНИЕ</div>
+         <div class=\"panel-body\">
+           <div class=\"alert alert-danger\" role=\"alert\">
+             <span class=\"glyphicon glyphicon-exclamation-sign\" aria-hidden=\"true\"></span>
+             <span class=\"sr-only\">Error:</span>
+             Заключение отсутствует или еще не создано
+           </div>
+           <p>
+             <a href=\"/create_conclusion?app_id=$id\" class=\"btn btn-primary right-float\">Создать заключение</a>
+           </p>
+         </div>
+       </div>
+     </div>
+   </div>";
+  }
+  else
+  {
+ // <a href=\"docs/$pacient_id/acts/qwe.docx\"><img src=\"pictures/wordicon.png\">Акт</a>  
+    $agreement_print_result = 
+    "<div class=\"row\">
+      <div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\">
+       <table class=\"table\">
+       <tbody>
+         <tr>
+           <td>Договор об оказании платных медицинских услуг</td>
+           <td>
+             <a href=\"/create_agreement?app_id=$id\" class=\"btn btn-primary right-float\">Создать договор</a>
+           </td>
+         </tr>
+         <tr>
+           <td>
+            Акт об оказании платных медицинских услуг
+           </td>
+           <td> 
+
+           </td>
+         </tr>
+         <tr>
+           <td>
+            Заключение врача
+           </td>
+           <td> 
+             <a href=\"/create_conclusion?app_id=$id\" class=\"btn btn-primary right-float\">Создать заключение</a>
+           </td>
+         </tr>
+       </tbody>
+       </table>
+     </div>
+     </div>";
+  }
+  /*Конец запроса*/
+  $pacient_id = $app->pacient_id;
+  $service_id = $app->service_id;
+  $doctor_id = $app->doctor_id;
+  $ts = strtotime($app->start);
+  $date = date('F d, Y',$ts);
+  $start = date('G:i', $ts);
+  $end = date('G:i',strtotime($app->end));
+  $admin = $this->_adminEntryOptions($id,$pacient_id);
+  //return "<h2>$app->pacient_fio <span class='label label-default'>$app->status</span></h2><br>"
+  //      . "<h5>$app->service_short_name</h5><hr>"
+  //      . "\n\t<p class=\"dates\">$date, $start&mdash;$end</p>"
+  //      . "\n\t<p>$app->service_id" . " - " . "$app->doctor_id</p>"
+  //      . "\n\t<p>$app->description</p>$admin";
+
+  return "<div aria-labelledby=\"gridSystemModalLabel\">
+  <div class=\"modal-dialog\" role=\"document\">
+  <div class=\"modal-content\">
+  <div class=\"modal-header\">
+   <div class=\"row\">
+   <div class=\"col-lg-8\">
+    <h4 class=\"modal-title\" id=\"gridSystemModalLabel\">#$app->id | $app->service_short_name | $start - $end $date</h4>
+  </div>
+  <div class=\"col-lg-4\">
+  <span class=\"label label-info right-float  \">$app->status</span>
+  </div>
+  </div>
+  </div>
+  <div class=\"modal-body\">
+  <div class=\"row\">
+    <div class=\"col-sm-12\">
+    <p>Пациент: <strong><a href=\"/pacient?id=$app->pacient_id\">$app->pacient_fio</a></strong> Номер телефона:<strong>$app->pacient_phone</  strong></p><hr>
+           <p>Врач: <strong><a href=\"/doctor?id=$app->doctor_id\">$app->doctor_fio_full</a></strong></p><hr>
+           <p>Дополнительная информация: <strong>$app->description</strong></p><hr>
+    </div>
+  </div>
+          $agreement_print_result
+          $conclusion_print_result
+        </div>
+        <div class=\"modal-footer\">
+          $admin
+        </div>
+        </div>
+        </div>
+        </div>";
+}
+/*-----END OF DISPLAY THE APP IN MODAL----------*/
 /*Форма редактирования и создания назначений*/
 public function displayForm()
 {

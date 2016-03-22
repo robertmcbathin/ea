@@ -19,7 +19,7 @@
 ?>
 <div id="content" class="container">
 <?
-  echo $cal->displayApp($id);
+//  echo $cal->displayApp($id);
+  echo $cal->displayAppModal($id);;
 ?>
-<div class="col-sm-12"><a href="calendar" class="right-float">&laquo; Вернуться в календарь</a></div>
 </div>

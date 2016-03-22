@@ -15,13 +15,9 @@
       	type: 'ajax',
         ajax : {
           type    : "GET"
-        //  data    : 'app_id=' + $(this).attr('data-id').val()
         }, 
-      	//'hideOnContentClick' : false,
-      	'transitionIn'	:	'elastic',
-      	'easingIn'      :   'swing',
-		'transitionOut'	:	'elastic',
-		'easingOut'      :   'swing',
+      	'transitionIn'	:	'fade',
+		'transitionOut'	:	'fade',
 		'speedIn'		:	1000, 
 		'speedOut'		:	200,
 		'showCloseButton': false

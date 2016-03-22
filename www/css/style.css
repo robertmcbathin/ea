@@ -120,6 +120,9 @@ span.icono-list {
 .right-float{
 	float: right;
 }
+.left-float{
+	float: right;
+}
 h1,h2,h3,h4,h5,h6{
 	font-family: Roboto;
 }
@@ -198,4 +201,7 @@ h1,h2,h3,h4,h5,h6{
 	color: #DDD;
 	font-family: Cambria;
 	text-decoration: none;
+}
+.fancybox-skin{
+	background: none;
 }
