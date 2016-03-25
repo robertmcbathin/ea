@@ -40,6 +40,7 @@
            $this->start = $app['app_start'];
            $start = strtotime($this->start);
            $this->start_time = date("H:i", $start);
+           $this->date = date("Y-m-d",$start);
            $this->end = $app['app_end'];
            $end = strtotime($this->end);
            $this->end_time = date("H:i", $end);

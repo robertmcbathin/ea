@@ -219,6 +219,28 @@ public function _checkStatus($st)
     return $aClass;
   }
 }
+/*Функция возвращает статус
+*
+*$st - статус назначения
+*/
+public function _getAppStatus($id)
+{
+  $result = array();
+  $sql = "SELECT `status` FROM `appointment`
+          WHERE `app_id` = '$id'";
+  try {
+    $stmt = $this->db->prepare($sql);
+    $stmt->execute();
+    while ($r = $stmt->fetch(PDO::FETCH_ASSOC))
+        {
+          $result[] = $r['status'];
+        }
+    $stmt->closeCursor();
+    return $result[0];
+  } catch (Exception $e) {
+    die($e->getMessage());
+  }
+}
   /*
 * Разметка для административных ссылок
   */
@@ -231,6 +253,8 @@ ADMIN_OPTIONS;
 /* Редактирование и удаление событий с заданным id*/
 private function _adminEntryOptions($id,$pacient_id)
 {
+  $st = $this->_getAppStatus($id);
+  $st=='прием завершен' ? $disabled='disabled' : $disabled='';
   return <<<ADMIN_OPTIONS
    <div class=\"row\">
     <div class="col-lg-6 col-sm-12 col-xs-12 col">
@@ -251,7 +275,7 @@ private function _adminEntryOptions($id,$pacient_id)
     <form action="confirmcomplete.php" method="post">
         <p>
           <a href="calendar" class="btn btn-default">&laquo; Вернуться в календарь</a>
-          <input type="submit" name="delete_app" class="btn btn-success right-float" value="Завершить назначение"/>
+          <input type="submit" name="delete_app" $disabled class="btn btn-success right-float" value="Завершить назначение"/>
           <input type="hidden" name="app_id" value="$id">
         </p>
       </form>
@@ -468,45 +492,36 @@ public function displayAppModal($id)
     //show file link to save
     //show agreement fields
     $agreement_print_result = 
-    "<div class=\"row\">
-    <div class=\"col-lg-4 col-sm-4\">
-       <div class=\"panel panel-primary\">
-         <div class=\"panel-heading\">ДОГОВОР</div>
-         <div class=\"panel-body\">
-           <div class=\"alert alert-info\" role=\"alert\">
-               <span class=\"sr-only\"></span>
-               <a href=\"$agreement_path\"><img src=\"/pictures/wordicon.png\">Договор</a>
-           </div>
-         </div>
-       </div>
-     </div>
-     <div class=\"col-lg-4 col-sm-4\">
-       <div class=\"panel panel-primary\">
-         <div class=\"panel-heading\">АКТ</div>
-         <div class=\"panel-body\">
-           <div class=\"alert alert-info\" role=\"alert\">
-               <span class=\"sr-only\"></span>
-               <a href=\"$act_path\"><img src=\"/pictures/wordicon.png\">Акт</a>
-           </div>
-         </div>
-       </div>
-     </div>
-     <div class=\"col-lg-4 col-sm-4\">
-       <div class=\"panel panel-primary\">
-         <div class=\"panel-heading\">ЗАКЛЮЧЕНИЕ</div>
-         <div class=\"panel-body\">
-           <div class=\"alert alert-danger\" role=\"alert\">
-             <span class=\"glyphicon glyphicon-exclamation-sign\" aria-hidden=\"true\"></span>
-             <span class=\"sr-only\">Error:</span>
-             Заключение отсутствует или еще не создано
-           </div>
-           <p>
+   "<div class=\"row\">
+      <div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\">
+       <table class=\"table\">
+       <tbody>
+         <tr>
+           <td>Договор об оказании платных медицинских услуг</td>
+           <td>
+             <a href=\"$agreement_path\"><img src=\"/pictures/wordicon.png\">Договор</a>
+           </td>
+         </tr>
+         <tr>
+           <td>
+            Акт об оказании платных медицинских услуг
+           </td>
+           <td> 
+              <a href=\"$act_path\"><img src=\"/pictures/wordicon.png\">Акт</a>
+           </td>
+         </tr>
+         <tr>
+           <td>
+            Заключение врача
+           </td>
+           <td> 
              <a href=\"/create_conclusion?app_id=$id\" class=\"btn btn-primary right-float\">Создать заключение</a>
-           </p>
-         </div>
-       </div>
+           </td>
+         </tr>
+       </tbody>
+       </table>
      </div>
-   </div>";
+     </div>";
   }
   else
   {
@@ -616,22 +631,22 @@ public function displayForm()
 	    <legend>$submit</legend>
       <label for="pacient_list">Пациент</label>
       <div class="ui-widget">
-        <input id="pacient_list" class="form-control" name="app_pacient" value="$app->pacient">
+        <input id="pacient_list" class="form-control" name="app_pacient" value="$app->pacient_fio">
       </div>
       <label for="service_list">Услуга</label>
       <div class="ui-widget">
-        <input class="form-control" id="service_list" name="service_list" value="$app->service_full_name">
+        <input class="form-control" id="service_list" name="service_list" value="$app->service_short_name">
       </div>
       <label for="service_list">Врач</label>
       <div class="ui-widget">
       <input  class="form-control" id="doctor_list" name="doctor_list" size="80" value="$app->doctor_fio_full">
       </div>
       <label for="app_date_start">Дата</label> 
-      <input type="date" class="form-control" value="$app_date_start" name="app_date_start"> 
+      <input type="date" class="form-control" value="$app->date" name="app_date_start"> 
       <label for="app_time_start">Начало:</label> 
-      <input type="time" class="form-control" size="10" value="$app_time_start" name="app_time_start"> 
+      <input type="time" class="form-control" size="10" value="$app->start_time" name="app_time_start"> 
       <label for="app_time_end">Конец:</label> 
-      <input type="time" class="form-control" value="$app_time_end" name="app_time_end"> 
+      <input type="time" class="form-control" value="$app->end_time" name="app_time_end"> 
 	    <label for="app_descrition">Описание</label>
 	    <textarea name="app_descrition" cols="40" rows="10" class="form-control" id="app_descrition">
 	    $app->description</textarea><br/>
@@ -718,13 +733,14 @@ public function processForm()
 		$id = (int) $_POST['app_id'];
 		$sql = "UPDATE `appointment`
 		        SET 
-               `pacient_id` = :p_id,
-               `service_id`  = :s_id,
-               `doctor_id` = :d_id,
-		           `app_desc` = :description,
-               `status` = :status,
-		           `app_start` = :start,
-		           `app_end` = :end WHERE `app_id`= $id";
+               `pacient_id` = $p_id,
+               `service_id`  = $s_id,
+               `doctor_id` = $d_id,
+		           `app_desc` = $desc,
+               `status` = $status,
+		           `app_start` = $datetime_start,
+		           `app_end` = $datetime_end 
+               WHERE `app_id`= $id";
 	}
 	try
 	{
@@ -812,8 +828,8 @@ public function confirmComplete($id)
           PDO::PARAM_INT);
         $stmt->execute();
         $stmt->closeCursor();
-        header("Location: ./");
-        die("<div class='container'><div class='alert alert-success'><p align='center'>Назначение успешно завершено. </p></div></div>");
+   //     header("Location: ./");
+        die("<div class='container'><div class='alert alert-success'><p align='center'>Назначение успешно завершено. Вернуться в <a href='calendar'>календарь</a>.</p></div></div>");
         return;
       }
       catch (Exception $e)
@@ -864,7 +880,7 @@ public function confirmDeleteService($id)
           PDO::PARAM_INT);
         $stmt->execute();
         $stmt->closeCursor();
-        header("Location: ./");
+       // header("Location: ./");
         die("<div class='container'><div class='alert alert-success'><p align='center'>Запись успешно удалена. </p></div></div>");
         return;
       }
@@ -1363,13 +1379,13 @@ public function buildTimeline($c)
     }
   }
   $services = array_unique($services);
-  echo "<pre>";
-  print_r($services);
-  echo "</pre>";
+ //echo "<pre>";
+ //print_r($services);
+ //echo "</pre>";
   /**/
   $st_time = date('H:i',mktime(8,0,0,$this->_m,$c,$this->_y));
   $end_time = date('H:i',mktime(18,0,0,$this->_m,$c,$this->_y));
-  echo $st_time . ' - ' . $end_time;
+ // echo $st_time . ' - ' . $end_time;
   foreach ($services as $service_name) {
     $s_html .= "<table><th class=\"table-head\">$service_name</th>";
     $prev_app_end = $st_time;
@@ -1383,19 +1399,19 @@ public function buildTimeline($c)
           $prev_app_end = $app->end_time;
         } else if ($app->start_time > $prev_app_end)
         {
-          echo "<br>";
-          echo $app->start_time;
-          echo ' ';
-          echo $prev_app_end;
+         // echo "<br>";
+         // echo $app->start_time;
+         // echo ' ';
+         // echo $prev_app_end;
           /*-------------*/
           $spare_time_diff = (strtotime($app->start_time) - strtotime($prev_app_end))/60 . "px";
           $busy_time_diff = (strtotime($app->end_time) - strtotime($app->start_time))/60 . "px";
-          echo "<br>$spare_time_diff - $busy_time_diff";
+         // echo "<br>$spare_time_diff - $busy_time_diff";
           $s_html .= "<tr><td class=\"spare\" height=\"$spare_time_diff\">Свободно $prev_app_end - $app->start_time</td></tr>"; 
           $s_html .= "<tr><td class=\"busy\" height=\"$busy_time_diff\"><a class=\"get-app-data app-data-link\" data-fancybox-type=\"ajax\" data-id=\"$app->id\" href=\"get_app_data.php?app_id=$app->id\">$app->start_time - $app->end_time | $app->doctor_fio_short | $app->pacient_fio</a></td></tr>";
           $prev_app_end = $app->end_time;
-          echo ' ';
-          echo $prev_app_end;
+         // echo ' ';
+         // echo $prev_app_end;
         }
       }
     }

@@ -18,7 +18,7 @@ echo <<<NOT_LOGIN
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>$title</title>
+  <title>$page_title</title>
   <link rel="icon" type="image/png" href="/favicon.ico" />
   <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
   <link rel="stylesheet" type="text/css" href="css/icono.min.css">
@@ -89,7 +89,7 @@ echo <<<LOGIN
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>$title</title>
+  <title>$page_title</title>
   <link rel="icon" type="image/png" href="/favicon.ico" />
   <link rel="stylesheet" type="text/css" href="css/style.css">
   <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">

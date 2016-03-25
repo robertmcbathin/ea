@@ -1,4 +1,5 @@
 <?
+$page_title = "График приема";
 include_once 'inc/header.php';
 if(!$loggedin) exit;
 ?>
