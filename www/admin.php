@@ -10,7 +10,7 @@ $cal = new Calendar($dbo);
   <div class="content">
   	<?
         echo $cal->displayForm();
-        $res = $cal->_loadPacientData();
+    //    $res = $cal->_loadPacientData();
   	?>
   </div>
 </div>

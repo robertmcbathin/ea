@@ -1,5 +1,6 @@
 <?
-  include_once 'inc/header.php';
+$page_title="Вход в систему";
+include_once 'inc/header.php';
   $error = $user = $psw = '';
   if(isset($_POST['user']))
   {

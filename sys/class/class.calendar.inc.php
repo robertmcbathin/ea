@@ -258,7 +258,7 @@ private function _adminEntryOptions($id,$pacient_id)
   return <<<ADMIN_OPTIONS
    <div class=\"row\">
     <div class="col-lg-6 col-sm-12 col-xs-12 col">
-      <form action="admin.php" method="post">
+      <form action="change_app_data" method="post">
         <p>
           <input type="submit" class="btn btn-primary btn-block" name="edit_app" value="Редактировать" />
           <input type="hidden" name="app_id" value="$id" />
@@ -733,14 +733,13 @@ public function processForm()
 		$id = (int) $_POST['app_id'];
 		$sql = "UPDATE `appointment`
 		        SET 
-               `pacient_id` = $p_id,
-               `service_id`  = $s_id,
-               `doctor_id` = $d_id,
-		           `app_desc` = $desc,
-               `status` = $status,
-		           `app_start` = $datetime_start,
-		           `app_end` = $datetime_end 
-               WHERE `app_id`= $id";
+               `pacient_id` = '$p_id',
+               `service_id`  = '$s_id',
+               `doctor_id` = '$d_id,
+		           `app_desc` = '$desc',
+		           `app_start` = '$datetime_start',
+		           `app_end` = '$datetime_end' 
+               WHERE `app_id`= '$id'";
 	}
 	try
 	{
@@ -1312,6 +1311,20 @@ public function _getDoctor($id)
 {
   $sql = "SELECT * FROM `doctor`
           WHERE `doctor_id` = '$id'";
+  $stmt = $this->db->prepare($sql);
+  $stmt->execute();
+  return $stmt;
+  $stmt->closeCursor();
+}
+/**
+ * [_getApp returns a row of data]
+ * @param  [int] $id [app id]
+ * @return [object]     [row of data]
+ */
+public function _getApp($id)
+{
+  $sql = "SELECT * FROM `appointment`
+          WHERE `app_id` = '$id'";
   $stmt = $this->db->prepare($sql);
   $stmt->execute();
   return $stmt;
