@@ -36,25 +36,50 @@ if(isset($_POST['app_id']))
 if(isset($_POST['app_id']))
 {
   $app_id = $_POST['app_id'];
+  $app = $cal->_loadAppById($app_id);
+  print_r($app);
+  $ts = strtotime($app->start);
+  $date = date('Y-m-d',$ts);
+  $start = date('H:i', $ts);
+  $end = date('H:i',strtotime($app->end));
+  echo "<br>$date $start $end";
   $stmt = $cal->_getApp($app_id);
   $r = $stmt->fetch(PDO::FETCH_ASSOC);
+  $pacient_name = $cal->_getNameById('pacient',$r['pacient_id']);
+  $service_name = $cal->_getNameById('service',$r['service_id']);
+  $doctor_name = $cal->_getNameById('doctor',$r['doctor_id']);
   echo <<<FORM_MARKUP
   <div class="container">
   <h1>Назначение №$r[app_id]</h1>
     <form action="change_app_data" method="post">
-      <label for="doctor_id">ID<input type="text" class="form-control" size="4" maxlength="8" name="app_id" value="$app_id" disabled></label><br>
-      <label for="fio_full">ФИО полностью<input type="text" class="form-control" size="80"  maxlength="255" name="fio_full" value="$r[fio_full]"></label><br>
-      <label for="fio_short">ФИО краткое<input type="text" class="form-control" size="80" maxlength="80" name="fio_short" value="$r[fio_short]"></label><br>
-      <label for="specialization">Специализация<input type="text" class="form-control" size="80" maxlength="150" name="specialization" value="$r[specialization]"></label><br>
-      <input type="hidden" value="$doctor_id" name="id"><br>
-      <label for="phone">Контактный телефон<input type="text" class="form-control" size="40" name="phone" maxlength="80"  value="$r[phone]"></label><br>
-      <button type="submit" class="btn btn-default">Изменить</button>
-    </form><br>
-    <form action="confirmdelete_doctor" method="POST">
-        <p>
-          <input type="submit" name="delete_doctor" class="btn btn-primary" value="Удалить"/>
-          <input type="hidden" name="doctor_id" value="$doctor_id">
-        </p>
+     <fieldset>
+      <label for="pacient_list">Пациент</label>
+      <div class="ui-widget">
+        <input id="pacient_list" class="form-control" name="app_pacient" value="$pacient_name">
+      </div>
+      <label for="service_list">Услуга</label>
+      <div class="ui-widget">
+        <input class="form-control" id="service_list" name="service_list" value="$service_name">
+      </div>
+      <label for="service_list">Врач</label>
+      <div class="ui-widget">
+      <input  class="form-control" id="doctor_list" name="doctor_list" size="80" value="$doctor_name">
+      </div>
+      <label for="app_date_start">Дата</label> 
+      <input type="date" class="form-control" value="$date" name="app_date_start"> 
+      <label for="app_time_start">Начало:</label> 
+      <input type="time" class="form-control" size="10" value="$start" name="app_time_start"> 
+      <label for="app_time_end">Конец:</label> 
+      <input type="time" class="form-control" value="$end" name="app_time_end"> 
+      <label for="app_descrition">Описание</label>
+      <textarea name="app_descrition" cols="40" rows="10" class="form-control" id="app_descrition">
+      $r[app_desc]</textarea><br/>
+      <input type="hidden" name="app_id" value="$app_id"/>
+      <input type="hidden" name="token" value="$_SESSION[token]"/>
+      <input type="hidden" name="action" value="app_edit"/>
+      <input type="submit" class="btn btn-primary" name="app_submit" value="Сохранить изменения"/>
+      или <a href="calendar">Отменить</a>
+    </fieldset>
       </form>
   </div>
 FORM_MARKUP;

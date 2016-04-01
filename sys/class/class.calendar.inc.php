@@ -1170,6 +1170,49 @@ public function _getID($type,$name)
   }
   return $id;
 }
+  /**
+   * [_getID Get the certain ID]
+   * @param  [string] $type [pacient, doctor or service]
+   * @param  [string] $name [pacient, doctor or service name]
+   * @return [int]   $id    [certain ID]
+   */
+public function _getNameById($type,$id)
+{
+  $id = (int)$id;
+  switch ($type) {
+    case 'pacient':
+      $sql = "SELECT `fio` FROM `pacient`
+              WHERE `pacient_id`='$id'";
+      $stmt = $this->db->prepare($sql);
+      $stmt->execute();
+      $r = $stmt->fetch(PDO::FETCH_ASSOC);
+      $name = $r['fio'];
+      $stmt->closeCursor();
+      break;
+    case 'doctor':
+      $sql = "SELECT `fio_full` FROM `doctor`
+              WHERE `doctor_id`='$id'";
+      $stmt = $this->db->prepare($sql);
+      $stmt->execute();
+      $r = $stmt->fetch(PDO::FETCH_ASSOC);
+      $name = $r['fio_full'];
+      $stmt->closeCursor();
+      break;
+    case 'service':
+      $sql = "SELECT `service_short_name` FROM `service`
+              WHERE `service_id`='$id'";
+      $stmt = $this->db->prepare($sql);
+      $stmt->execute();
+      $r = $stmt->fetch(PDO::FETCH_ASSOC);
+      $name = $r['service_short_name'];
+      $stmt->closeCursor();
+      break;
+    default:
+      # code...
+      break;
+  }
+  return $name;
+}
  /**
    * [_getPrice Get the price]
    * @param  [int] $service_id []
