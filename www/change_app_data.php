@@ -4,45 +4,49 @@ include_once '../sys/core/init.inc.php';
 include_once 'inc/header.php';
 if(!$loggedin) exit;
 $cal = new Calendar($dbo);
-if(isset($_POST['app_id']))
+if(isset($_POST['app_pacient']))
 {
-//  $doctor_id      = $_POST['id'];
-//  $fio_full       = $_POST['fio_full'];
-//  $fio_short      = $_POST['fio_short'];
-//  $specialization = $_POST['specialization'];
-//  $phone          = $_POST['phone'];
-//  $change_doctor_query = ("UPDATE `doctor` SET `fio_full`       ='$fio_full',
-//                                                `fio_short`      ='$fio_short',
-//                                                `specialization` = '$specialization',
-//                                                `phone`          = '$phone'
-//                           WHERE `doctor_id` = '$doctor_id'");
-//  if (mysql_query($change_doctor_query))
-//  {
-//    die("<div class='container'>
-//           <div class='alert alert-success'>
-//             <p align='center'>Запись изменена. Можете перейти в <a href='settings'>меню //настроек</a>.</p>
-//           </div>
-//         </div>");
-//  }
-//  else
-//  {
-//    die("<div class='container'>
-//         <div class='alert alert-danger'>
-//           <p align='center'>Что-то пошло не так. Попробуйте повторить попытку.</p>
-//         </div>
-//       </div>");
-//  }
+  $app_id          = (int)$_POST['app_id'];
+  $pacient_id      = $cal->_getID('pacient',$_POST['app_pacient']);
+  $service_id      = $cal->_getID('service',$_POST['service_list']);
+  $doctor_id       = $cal->_getID('doctor',$_POST['doctor_list']);
+  $date            = $_POST['app_date_start'];
+  $start           = $_POST['app_time_start'] . ':00';
+  $end             = $_POST['app_time_end'] . ':00';
+
+  $datetime_start = $date . 'T' . $start . ':00' . '+00:00';
+  $datetime_end = $date . 'T' . $end . ':00' . '+00:00';
+  $change_app_query = ("UPDATE `appointment` SET `pacient_id` = '$pacient_id',
+                                                 `service_id` = '$service_id',
+                                                 `doctor_id`  = '$doctor_id',
+                                                 `app_start`  = '$datetime_start',
+                                                 `app_end`    = '$datetime_end'
+                           WHERE `app_id` = '$app_id'");
+  if (mysql_query($change_app_query))
+  {
+    die("<div class='container'>
+           <div class='alert alert-success'>
+             <p align='center'>Запись изменена. Можете перейти в <a href='calendar'>календарь</a>.</p>
+           </div>
+         </div>");
+  }
+  else
+  {
+    die("<div class='container'>
+         <div class='alert alert-danger'>
+           <p align='center'>Что-то пошло не так. Попробуйте повторить попытку.</p>
+         </div>
+       </div>");
+  }
 }
 if(isset($_POST['app_id']))
 {
   $app_id = $_POST['app_id'];
   $app = $cal->_loadAppById($app_id);
-  print_r($app);
   $ts = strtotime($app->start);
   $date = date('Y-m-d',$ts);
   $start = date('H:i', $ts);
   $end = date('H:i',strtotime($app->end));
-  echo "<br>$date $start $end";
   $stmt = $cal->_getApp($app_id);
   $r = $stmt->fetch(PDO::FETCH_ASSOC);
   $pacient_name = $cal->_getNameById('pacient',$r['pacient_id']);
@@ -71,9 +75,7 @@ if(isset($_POST['app_id']))
       <input type="time" class="form-control" size="10" value="$start" name="app_time_start"> 
       <label for="app_time_end">Конец:</label> 
       <input type="time" class="form-control" value="$end" name="app_time_end"> 
-      <label for="app_descrition">Описание</label>
-      <textarea name="app_descrition" cols="40" rows="10" class="form-control" id="app_descrition">
-      $r[app_desc]</textarea><br/>
+      <label for="app_descrition">Описание</label><br/>
       <input type="hidden" name="app_id" value="$app_id"/>
       <input type="hidden" name="token" value="$_SESSION[token]"/>
       <input type="hidden" name="action" value="app_edit"/>
