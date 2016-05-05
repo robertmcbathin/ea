@@ -15,7 +15,7 @@
 	padding: 0;
 	list-style: none;
 	background-color: transparent;
-	text-align: center;
+	//text-align: center;
 	border: 1px solid transparent;
 	border-top:0;
 	border-bottom: 2px solid transparent;
@@ -39,14 +39,14 @@
 	border-right: 2px solid transparent;
 	border-radius: 3px;
 	min-width: 100px;
-    width:158px;
+    width:263px;
 	min-height: 60px;
 	height: auto;
 	overflow: hidden;
 	background-color: #bcd;
 }
 .calendar ul li:hover{
-	background-color: #BEDBCA;
+	background-color: #bcd;
 	z-index:1;
 	-mox-box-shadow: 0 0 10px #789;
 	-webkit-box-shadow: 0 0 10px #789;
@@ -67,17 +67,17 @@
 	margin-bottom: 5px;
 }
 .calendar ul li a{
-	//position: relative;
-	display: block;
+	display: inline;
 	margin: 2px;
 	padding: 2px;
 	font-size: 11px;
-	
 	z-index:1;
 	text-decoration: none;
 	color:#F9F9FB;
 	font-weight: bold;
 	font-style: italic;
+	width:80px;
+	text-align: left;
 }
 .calendar ul li a:hover{
 	//background-color: #bcf;
@@ -89,13 +89,23 @@
 .calendar ul li.fill{
 	background-color: #ccc;
 }
+.calendar ul li p{
+	font-family: Calibri;
+	font-weight: 700;
+	text-align: left;
+	color: #FFF1F1;
+	text-shadow: 0 0 2px #000;
+}
 .weekdays li:hover, li.fill:hover{
 	background-color: #bcd;
 	-moz-box-shadow:none;
 	-webkit-box-shadow: none;
 	box-shadow: none;
 }
-.calendar .weekdays li:hover,.today{
+.calendar ul li.today{
+	background-color: #A7CCA7;
+}
+.calendar .weekdays li:hover{
 	background-color: #bcf;
 }
 .calendar .weekdays li:hover{

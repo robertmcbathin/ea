@@ -3,7 +3,8 @@ $page_title = "График приема";
 include_once 'inc/header.php';
 if(!$loggedin) exit;
 ?>
-<div class="container calendar">
+<div class="container-fluid calendar">
+<div class="center">
 <?
 $cal = new Calendar($dbo);
 if(isset($_GET['day']))
@@ -17,6 +18,7 @@ if(isset($_GET['day']))
 echo $cal->buildCalendar();
 }
 ?>
+	</div>
 </div>
 <?
 include_once 'inc/footer.php';

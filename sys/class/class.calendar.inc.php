@@ -314,24 +314,39 @@ public function buildCalendar()
    // $ae = "</a>";
 		if($this->_startDay<$i && $this->_daysInMonth>=$c)
 		{
-			/*Форматировать данные о событиях  view.php?app_id='. $app->id . '*/
-			$app_info = NULL;
+			/*Форматировать данные о событиях  view.php?app_id='. $app->id . '    ' (' . $app->service_short_name . ')' .*/
+			$apps_info = NULL;
+      $app_info = NULL;
 			if (isset($apps[$c]))
 			{
-				foreach ($apps[$c] as $app) 
-				{
-          $st = $this->_checkStatus($app->status);
-				  $link = '<a class=' . '"' . $st . ' ' . 'get-app-data' . '" ' .  'data-fancybox-type="ajax" ' . 'data-id="' . $app->id . '"' . ' href="get_app_data.php?app_id=' . $app->id .'">' 
-          . '<p align=\'left\'>' . $app->start_time . ' - ' . $app->end_time . ' (' . $app->service_short_name . ')' . '</p>'  . '</a>';
-				  $app_info .= "\n\t\t\t$link";
-          $app_info .= "\n\t\t\t<hr>$button";
-				}
+        $services = array();
+        foreach ($apps[$c] as $app) 
+        {
+          $services[] = $app->service_short_name;
+        }
+        $services = array_unique($services);
+        print_r($services);
+        foreach ($services as $service_name) 
+        {
+          $app_info = '<p>' . $service_name . '</p>';
+          foreach ($apps[$c] as $app) 
+          {
+            if ($app->service_short_name == $service_name)
+            {
+              $st = $this->_checkStatus($app->status);
+              $link = '<a class=' . '"' . $st . ' ' . 'get-app-data' . '" ' .  'data-fancybox-type="ajax" ' . 'data-id="' . $app->id . '"' . ' href="get_app_data.php?app_id=' . $app->id .'">' 
+              . '<span>' . $app->start_time . ' - ' . $app->end_time . '</span>'  . '</a>';
+              $app_info .= "\n\t\t\t$link";
+            }
+          }
+          $apps_info .= $app_info;
+        }
 			}
 			$date =  $as . sprintf("\n\t\t\t<strong><span class-\"glyphicon glyphicon-tasks\"></span> %02d</strong>", $c++) . "</a>";
 		}
 		else { $date="&nbsp;";}
 		$wrap = $i!=0 && $i%7==0 ? "\n\t</ul>\n\t<ul>" : NULL;
-		$html .= $ls . $date . $app_info . $le .  $wrap;
+		$html .= $ls . $date . $apps_info . $le .  $wrap;
 	}
 	while ($i%7!=1) 
 	{

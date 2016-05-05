@@ -63,7 +63,7 @@ echo <<<NOT_LOGIN
                 <li><a href="faq"><span class="glyphicon glyphicon-question-sign"></span> СПРАВКА</a></li>
               </ul>
               <ul class="nav navbar-nav navbar-right">
-                <li><a href='login' target='_blank'><span class='glyphicon glyphicon-log-in'></span> ВОЙТИ</a></li>
+                <li><a href='login'><span class='glyphicon glyphicon-log-in'></span> ВОЙТИ</a></li>
               </ul>
             </div><!-- /.navbar-collapse -->
           </div><!-- /.container-fluid -->
